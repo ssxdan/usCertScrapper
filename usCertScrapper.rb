@@ -21,5 +21,19 @@ def getBulletinList()
   end
   return res
 end
-  
-  
+
+def bulletinToArray(bulletinURL)
+  boletin = $mechanize.get("#{CERTBASE}#{bulletinURL}")
+  doc = Nokogiri::HTML(boletin.body)
+  res = []
+  for severity in ['High Vulnerabilities', 'Medium Vulnerabilities', 'Low Vulnerabilities', 'Severity Not Yet Assigned']
+    table = doc.xpath("//table[@summary='#{severity}']")
+    rows = table.css('tr')
+    text_all_rows = rows.map do |row|
+        row_values = row.css('td').map(&:text)
+    end
+    text_all_rows.delete_at(0)
+    text_all_rows.each { |td| res.push(td)}
+  end
+  return res
+end
