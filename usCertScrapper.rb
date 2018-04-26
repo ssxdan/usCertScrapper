@@ -41,7 +41,7 @@ end
 
 def arrayToCSV(array, ruta)
   # Primary_Vendor_Product;Description;Published;CVSS_Score;Source_and_Patch_Info
-	line = ERB.new %q{<%= row[0] %>|<%= row[1] %>|<%= row[2] %>|<%= row[3] %>|<%= row[4].match(/CVE-[0-9]+-[0-9]+/)[0] %>}
+	line = ERB.new %q{<%= row[0].gsub("\u{a0}","").strip()%>|<%= row[1] %>|<%= row[2]%>|<%= row[3]%>|<%= row[4].match(/CVE-[0-9]+-[0-9]+/)[0]%>}
 	csv = File.open(ruta,"w:UTF-8")
   csv.puts("Primary_Vendor_Product|Description|Published|CVSS_Score|Source_and_Patch_Info")
   array.each do |row|
