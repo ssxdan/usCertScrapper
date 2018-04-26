@@ -14,7 +14,7 @@ def getBulletinList()
   items = table.css('li')
   items.each do |bulletin|
     begin
-      print(["#{bulletin.css('a').text}", "#{bulletin.css('a')[0]["href"]}"])
+      #print(["#{bulletin.css('a').text}", "#{bulletin.css('a')[0]["href"]}"])
       res.push(["#{bulletin.css('a').text}", "#{bulletin.css('a')[0]["href"]}"])
     rescue
       print("")
