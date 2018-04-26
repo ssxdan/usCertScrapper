@@ -54,3 +54,14 @@ def arrayToCSV(array, ruta)
   end
 	csv.close
 end
+
+def cuatroUltimosACSV()
+  boletines = getBulletinList()
+  (0..3).each do |n|
+    boletin = bulletinToArray("#{boletines[n][1]}")
+    arrayToCSV(boletin,"#{boletines[n][1].split("/").last}.csv")
+    #print(boletin)
+  end
+end
+
+cuatroUltimosACSV()
