@@ -1,5 +1,6 @@
 require 'mechanize'
 require 'nokogiri'
+require 'erb'
 
 CERTBASE = "https://www.us-cert.gov".freeze
 
@@ -36,4 +37,20 @@ def bulletinToArray(bulletinURL)
     text_all_rows.each { |td| res.push(td)}
   end
   return res
+end
+
+def arrayToCSV(array, ruta)
+  # Primary_Vendor_Product;Description;Published;CVSS_Score;Source_and_Patch_Info
+	line = ERB.new %q{<%= row[0] %>|<%= row[1] %>|<%= row[2] %>|<%= row[3] %>|<%= row[4].match(/CVE-[0-9]+-[0-9]+/)[0] %>}
+	csv = File.open(ruta,"w:UTF-8")
+  csv.puts("Primary_Vendor_Product|Description|Published|CVSS_Score|Source_and_Patch_Info")
+  array.each do |row|
+    begin
+      #print("#{line.result(binding)}\n")
+      csv.puts(line.result(binding))
+    rescue
+      print("")
+    end
+  end
+	csv.close
 end
