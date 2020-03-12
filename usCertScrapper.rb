@@ -31,7 +31,7 @@ def bulletinToArray(bulletinURL)
     table = doc.xpath("//table[@summary='#{severity}']")
     rows = table.css('tr')
     text_all_rows = rows.map do |row|
-        row_values = row.css('td').map(&:text)
+        row.css('td').map(&:text)
     end
     text_all_rows.delete_at(0)
     text_all_rows.each { |td| res.push(td)}
@@ -57,7 +57,7 @@ end
 
 def cuatroUltimosACSV()
   boletines = getBulletinList()
-  (0..3).each do |n|
+  (0..14).each do |n|
     boletin = bulletinToArray("#{boletines[n][1]}")
     arrayToCSV(boletin,"#{boletines[n][1].split("/").last}.csv")
     #print(boletin)
